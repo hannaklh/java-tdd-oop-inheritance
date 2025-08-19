@@ -17,50 +17,52 @@ public class LibraryTest {
         library.addToStock(article);
         library.addToStock(newspaper);
 
-        Assertions.assertTrue(library.books.contains(book));
-        Assertions.assertTrue(library.articles.contains(article));
-        Assertions.assertTrue(library.newspapers.contains(newspaper));
+        Assertions.assertTrue(library.items.contains(book));
+        Assertions.assertTrue(library.items.contains(article));
+        Assertions.assertTrue(library.items.contains(newspaper));
     }
 
     @Test
-    public void shouldCheckOutArticleIfInStock() {
+    public void shouldCheckOutItemIfInStock() {
 
         Library library = new Library();
         Article article = new Article("Very important journal");
         library.addToStock(article);
 
-        Assertions.assertEquals("item has been checked out", library.checkOutArticle("Very important journal"));
+        Assertions.assertEquals("item has been checked out", library.checkOutItem("Very important journal"));
+
+        Book book = new Book("Captivating book");
+        library.addToStock(book);
+
+        Assertions.assertEquals("item has been checked out", library.checkOutItem("Captivating book"));
+
     }
 
     @Test
-    public void shouldDeclineIfNotArticleAvailableInStockOrCheckedOut() {
+    public void shouldDeclineIfItemNotAvailableInStockOrCheckedOut() {
         Library library = new Library();
         Article article = new Article("Very important journal");
         library.addToStock(article);
         article.checkOut();
 
-        Assertions.assertEquals("item is not part of the library's collection", library.checkOutArticle("My favourite article"));
-        Assertions.assertEquals("item is currently on loan", library.checkOutArticle("Very important journal"));
-    }
+        Assertions.assertEquals("item is not part of the library's collection", library.checkOutItem("My favourite article"));
+        Assertions.assertEquals("item is currently on loan", library.checkOutItem("Very important journal"));
 
-    @Test
-    public void shouldCheckOutBookIfInStock() {
-        Library library = new Library();
-        Book book = new Book("Captivating book");
-        library.addToStock(book);
-
-        Assertions.assertEquals("item has been checked out", library.checkOutBook("Captivating book"));
-
-    }
-
-    @Test
-    public void shouldDeclineIfNotBookAvailableInStock() {
-        Library library = new Library();
         Book book = new Book("Captivating book");
         library.addToStock(book);
         book.checkOut();
 
-        Assertions.assertEquals("item is not part of the library's collection", library.checkOutBook("My favourite book"));
-        Assertions.assertEquals("item is currently on loan", library.checkOutBook("Captivating book"));
+        Assertions.assertEquals("item is not part of the library's collection", library.checkOutItem("My favourite book"));
+        Assertions.assertEquals("item is currently on loan", library.checkOutItem("Captivating book"));
+
+    }
+    @Test
+    public void shouldDeclineIfNewspaper() {
+        Library library = new Library();
+        Newspaper newspaper = new Newspaper("Most interesting newspaper");
+        library.addToStock(newspaper);
+
+        Assertions.assertEquals("newspapers are not available for loan", library.checkOutItem("Most interesting newspaper"));
+        Assertions.assertEquals("newspapers are not available for loan", library.checkOutItem("Most interesting newspaper"));
     }
 }

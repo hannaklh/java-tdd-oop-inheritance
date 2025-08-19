@@ -34,4 +34,7 @@ public abstract class Item {
 
         return "item has been checked out";
     }
+    public String getTitle() {
+        return title;
+    }
 }

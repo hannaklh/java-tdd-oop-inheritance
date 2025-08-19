@@ -1,11 +1,19 @@
 package com.booleanuk.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
     List<Article> articles;
     List<Book> books;
     List<Newspaper> newspapers;
+
+    public Library() {
+        this.books = new ArrayList<>();
+        this.articles = new ArrayList<>();
+        this.newspapers = new ArrayList<>();
+
+    }
 
     public void addToStock(Article item) {
         this.articles.add(item);
@@ -42,6 +50,7 @@ public class Library {
             return "item is not part of the library's collection";
         }
 
+
         return filtered.get(0).checkOut();
     }
 
@@ -67,18 +76,6 @@ public class Library {
         }
 
         return filtered.get(0).checkOut();
-    }
-
-    public String checkInNewspaper(String title) {
-        List<Newspaper> filtered = this.newspapers.stream()
-                .filter(newspaper -> newspaper.title.equals(title))
-                .toList();
-
-        if (filtered.size() < 1) {
-            return "item is not part of the library's collection";
-        }
-
-        return filtered.get(0).checkIn();
     }
 
     public String checkOutNewspaper(String title) {
